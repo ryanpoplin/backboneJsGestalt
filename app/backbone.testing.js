@@ -1,6 +1,7 @@
 'use strict';
+
 (function($){
-	// A BackboneJs Router...
+
 	var BackboneJsRouter = Backbone.Router.extend({
 		routes: {
 			// If logged out or needs to sign up; this route...
@@ -10,62 +11,104 @@
 			'quest-display/:quest': 'questDisplayRoute'
 		},
 		initialize: function() {
-			console.log('BackboneJsRouter init...');
 		},
 		defaultLandingIndexRoute: function() {
-			var backboneJsIndexView = new BackboneJsIndexView;
-			backboneJsIndexView.render();
+			var indexBackboneJsView = new IndexBackboneJsView({});
+			indexBackboneJsView.render();
+		},
+		questListingsRoute: function() {
+			var questListingsBackboneJsView = new questListingsBackboneJsView({});
+			questListingsBackboneJsView.render();
 		}
 	});
-	// A BackboneJs Model...
-	var BackboneJsModel = Backbone.Model.extend({
+	
+	var IndexBackboneJsModel = Backbone.Model.extend({
 		defaults: {
-			title: 'Park Hop',
-			age: 24
+			indexPrimaryHeading: 'Explore More',
+			indexSubPrimaryHeading: 'Real World Quests...',
+			indexQuestListingsBtn: 'Go To Quests Library...',
 			// {} or [] for 'skill' data?...
 		},
 		initialize: function() {
-			console.log('BackboneJsModel init...');
 		}
 	});
-	var backboneJsModel = new BackboneJsModel({
-		title: 'Lantern Sailing...'
-	});
-	// Another BackboneJs Model...
-	var TestBackboneJsModel = Backbone.Model.extend({
-		test: 'This is a test...',
-		initialize: function() {
-			console.log('TestBackboneJsModel init...');
-		}
-	});	
-	// A BackboneJs Collection....
-	var TestBackboneJsCollection = Backbone.Collection.extend({
-		model: TestBackboneJsModel,
-		initialize: function() {
-			console.log('BackboneJsCollection init...');
-		}
-	});
+
+	var indexBackboneJsModel = new IndexBackboneJsModel({});
+	
 	// Add the two Model init's to the Collection!
 	// Make the Collection print out Subviews into the '#spa' element!
-	// A BackboneJs View...
-	var BackboneJsIndexView = Backbone.View.extend({
+	
+	var IndexBackboneJsView = Backbone.View.extend({
 		tagName: 'div',
 		el: '#spa',
+		footerSubView: '.footer-drawer-sub-view',
 		template: _.template($('#index-view-template').html()),
-		model: backboneJsModel,
+		model: indexBackboneJsModel,
 		render: function() {
-			var backboneJsModel = new BackboneJsModel({
-				title: 'Park Hop...'
-			});
 			var html = this.template({
-				title: this.model.get('title')
-			});
+				indexPrimaryHeading: this.model.get('indexPrimaryHeading'),
+				indexSubPrimaryHeading: this.model.get('indexSubPrimaryHeading'),
+				indexQuestListingsBtn: this.model.get('indexQuestListingsBtn')			});
 			this.$el.html(html);
+			var footerDrawerSubViewView = new FooterDrawerSubViewView({});
+			footerDrawerSubViewView.render();
+			// .$el ...
+			$(this.footerSubView).append(footerDrawerSubViewView.$el);
+		},
+		initialize: function() {
 		}
 	});
-	// Is this now relevant?...
+
+	var QuestListingsBackboneJsModel = Backbone.Model.extend({
+
+	});
+
+	var QuestListingsBackboneJsCollection = Backbone.Collection.extend({
+
+	});
+
+	var QuestListingsBackboneJsViewView = Backbone.View.extend({
+
+	});
+
+	var FooterDrawerSubViewModel = Backbone.Model.extend({
+		defaults: {
+			retractedText: 'Log In / Sign Up',
+			signUpWithFacebookBtn: 'Sign Up with Facebook',
+			facebookDisclaimer: 'We will never post anything on your profile with out your permission.',
+			spacingText: 'OR',
+			signUpWithEmailBtn: 'Sign Up with Email',
+			alreadySignedUpText: 'Already signed in?',
+			logInLinkText: 'Login now!'
+		},
+		initialize: function() {
+		}
+	});
+
+	var footerDrawerSubViewModel = new FooterDrawerSubViewModel({});
+
+	var FooterDrawerSubViewView = Backbone.View.extend({
+		template: _.template($('#footer-drawer-sub-view-template').html()),
+		model: footerDrawerSubViewModel,
+		render: function() {
+			var html = this.template({
+				retractedText: this.model.get('retractedText'),
+				signUpWithFacebookBtn: this.model.get('signUpWithFacebookBtn'),
+				facebookDisclaimer: this.model.get('facebookDisclaimer'),
+				spacingText: this.model.get('spacingText'),
+				signUpWithEmailBtn: this.model.get('signUpWithEmailBtn'),
+				alreadySignedUpText: this.model.get('alreadySignedUpText'),
+				logInLinkText: this.model.get('logInLinkText')
+			});
+			this.$el.html(html);
+		},
+		initialize: function() {
+		}
+	});
+
 	$(function(){
-		var Application = new BackboneJsRouter;
+		var application = new BackboneJsRouter;
 		Backbone.history.start(); 
 	});
+
 }(jQuery));

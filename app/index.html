@@ -1,4 +1,4 @@
-<!-- HTML/5... -->
+<!-- HTML/5 App... -->
 <!doctype html>
 <html lang="en">
 	<head>
@@ -6,8 +6,10 @@
 		<title>backboneJsGestalt</title>
 		<!-- Yea, I know valuable stuff is missing here... -->
 		<style>
-			/* Add HTML/5/CSS/3 Reset... */
-
+			/* Utility Classes... */
+			.display-none {
+				display: none;
+			}
 		</style>
 		<!-- Replace with CDN... -->
 		<!-- Vendor Software... -->
@@ -20,21 +22,30 @@
 			<!-- BackboneJs App Loaded Views Container -->
 		</div>
 		<!-- JavaScript Templates... -->
-		<!-- Index View Template... -->
+		<!-- Index Template... -->
 		<script type="text/template" id="index-view-template">
-			<header id="header" class="">
+			<div id="index-view-container" class="">
 				<hgroup>
-					<h1>backboneJsGestalt</h1>
-					<h2>something cool...</h2>
+					<h1><%= indexPrimaryHeading %></h1>
+					<h2><%= indexSubPrimaryHeading %></h2>
 				</hgroup>
-			</header>
-			<section id="" class="">
-				<h3>check out <%= title %> in the quest directory now!</h3>
-				<a href="">Quest Listings View...</a>
-			</section>
-			<footer id="" class="">
-				<p>Here is some awesome footer info...</p>
-			</footer>
+				<a href="#/quest-listings"><%= indexQuestListingsBtn %></a>
+				<footer id="" class="footer-drawer-sub-view">
+				</footer>
+			</div>
+		</script>
+		<!-- Footer Drawer Template... -->
+		<script type="text/template" id="footer-drawer-sub-view-template">
+			<div id="footer-drawer-sub-view-container" class="">
+				<p class=""><%= retractedText %></p>
+				<a href="#/" class="display-none"><%= signUpWithFacebookBtn %></a>
+				<p class="display-none"><%= facebookDisclaimer %></p>
+				<p class="display-none"><%= spacingText %></p>
+				<a href="#/" class="display-none"><%= signUpWithEmailBtn %></a>
+				<br>
+				<span class="display-none"><%= alreadySignedUpText %></span>
+				<a href="#/" class="display-none"><%= logInLinkText %></a>
+			</div>
 		</script>
 		<!-- The BackboneJs App... -->
 		<script src="backbone.testing.js"></script>
